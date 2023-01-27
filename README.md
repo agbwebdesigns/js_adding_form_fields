@@ -1,6 +1,8 @@
 # js_adding_form_fields
 A Javascript program that adds functionality to a form.
 
+All of the form-fields are attached to a datecode that is entered at the top of the form.  If a user wants to add another datecode, they can.  It will populate more form-fields attached to the new datecode.  There are also checkboxes near the top of the form the will omit form-fields from being printed.  I added all of this functionality to the form that was created by my client.
+
 Added functionality:
 add datecodes to each section of the form,
 add multiple datecodes,
