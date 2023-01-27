@@ -1,0 +1,601 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Administrator Dan Wright Classic Components Dashboard</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+
+    <link rel="shortcut icon" href="detailed_files/classic-mark-512x512.png" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="detailed_files/classic-mark-512x512.png" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+    <!-- Custom styles for this template -->
+    <!--
+    <link href="detailed_files/starter-template.css" rel="stylesheet">
+    -->
+    <link rel="stylesheet" href="detailed_files/sticky-header-footer.css" media="screen, print" type="text/css">
+    <link rel="stylesheet" href="detailed_files//sticky-header-footer.css" media="screen, print" type="text/css">
+    <link href="detailed_files/jquery-ui.css" rel="stylesheet">
+   </head>
+  <body>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+  <div class="circle"><a class="navbar-brand" href="detailed_files/"><img src="detailed_files/classic-mark-512x512.png" alt="Datamation, by Classic Components" style="vertical-align: top; text-align: center; height: 24px; width: 24px; margin-left: 4px;"></a></div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="partsfile_index.php">Parts File Upload</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="vendors_list.php">Vendors</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="partsearchengine_list.php">Part Search Engines</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="chipshunter_index.php">ChipsHunter Tools</a>
+      </li>      
+      <li class="nav-item">
+        <a class="nav-link" href="inspection_reports_list.php">Inventory Inspection Reports</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="users_list.php">Users</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Logged in as Dan Wright</a>
+        <div class="dropdown-menu" aria-labelledby="dropdown01">
+          <a class="dropdown-item" href="users_form.php?id=1">Edit Info</a>
+          <a class="dropdown-item" href="passwordchange_form.php?id=1">Change Password</a>
+          <a class="dropdown-item" href="logout.php">Log out</a>
+        </div>
+      </li>
+    </ul>
+
+<!--
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+-->
+  </div>
+</nav>
+<style>
+.container1 input[type=text] {
+padding:5px 0px;
+margin:5px 5px 5px 0px;
+}
+
+
+.add_form_field
+{
+    background-color: #1c97f3;
+    border: none;
+    color: white;
+    padding: 8px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+	border:1px solid #186dad;
+
+}
+
+input{
+    border: 1px solid #1c97f3;
+    /*width: 260px;
+    /height: 40px;*/
+	margin-bottom:14px;
+}
+
+.delete{
+    background-color: #fd1200;
+    border: none;
+    color: white;
+    padding: 5px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    cursor: pointer;
+
+}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script>
+$(document).ready(function() {
+    var max_fields      = 10;
+    var wrapper         = $(".container1"); 
+    var wrapper_product_arrival_inspection = $(".container2"); 
+    var add_button      = $(".add_form_field"); 
+    
+    var x = 1; 
+
+$('input[name=mytext]').keyup(function(){
+  $('#initname').text( this.value );
+});
+
+    $(add_button).click(function(e){ 
+        e.preventDefault();
+        if(x < max_fields){ 
+            x++; 
+            $(wrapper).append('<div><input type="text" name="mytext[]"/><a href="#" class="delete">Delete</a></div>'); //add input box
+            $(wrapper_product_arrival_inspection).append('<div><span id="initname">datecode</span> New form for product arrival inspection</div>'); //add another for product arrival inspection
+        }
+		else
+		{
+		alert('You Reached the limits')
+		}
+    });
+    
+    $(wrapper).on("click",".delete", function(e){ 
+        e.preventDefault(); 
+        $(this).parent('div').remove(); 
+		$(wrapper_product_arrival_inspection).remove(); 
+
+        x--;
+    })
+});
+</script>
+
+
+    <div id="wrap">
+        <div class="container starter-template">
+
+	<h1>CSI Inspection Report</h1>
+<form class="needs-validation" action="inspection_reports_save.php" method="POST" enctype="multipart/form-data" novalidate>
+<input type="hidden" name="id" value="7">
+<div class="container" style="height:30px"><a name=intro></a></div>
+<div class="card border inspection-section">
+  <div class="card-body fakewindowcontain">
+    <h3 class="card-title">
+    <div><img src="detailed_files/logo.png"></div>
+Inspection Parameters
+ 
+    </h3>
+    <!-- <p class="card-text">...</p> -->
+    <div id="mainform" class="container col-12">
+      
+    <div class="row"><div class="col-5" align="right"><label>Classic SO#</label></div>
+<div class="col-5"><input type="text" name="classic_so_num" class="form-control" value="testdan1" required>
+
+</div></div>
+<div class="row"><div class="col-5" align="right"><label>Customer Name</label></div>
+<div class="col-5"><input type="text" name="customer_name" class="form-control" value="Applied Technical Services" required>
+
+</div></div>
+<div class="row"><div class="col-5" align="right"><label>Customer PO#</label></div>
+<div class="col-5"><input type="text" name="customer_po_num" class="form-control" value="po field" required>
+
+</div></div>
+<div class="row"><div class="col-5" align="right"><label>Date Received</label></div>
+<div class="col-5"><input type="text" name="date_received" class="form-control" value="1970-01-01" >
+
+</div></div>
+<div class="row"><div class="col-5" align="right"><label>Manufacturer</label></div>
+<div class="col-5"><input type="text" name="mfg" class="form-control" value="" >
+
+</div></div>
+<div class="row"><div class="col-5" align="right"><label>Manuf. Part Number</label></div>
+<div class="col-5"><input type="text" name="mfg_partno" class="form-control" value="" >
+
+</div></div>
+<div class="row"><div class="col-5" align="right"><label>Internal Part Number</label></div>
+<div class="col-5"><input type="text" name="internal_partno" class="form-control" value="" >
+
+</div></div>
+<div class="row"><div class="col-5" align="right"><label>Part Description</label></div>
+<div class="col-5"><input type="text" name="part_description" class="form-control" value="" >
+
+</div></div>
+<div class="row"><div class="col-5" align="right"><label>Order Quantity</label></div>
+<div class="col-5"><input type="text" name="order_qty" class="form-control" value="" >
+
+</div></div>
+<div class="row"><div class="col-5" align="right"><label>Received Quantity</label></div>
+<div class="col-5"><input type="text" name="received_qty" class="form-control" value="" >
+
+</div></div>
+<div class="row"><div class="col-5" align="right"><label>Tested Quantity</label></div>
+<div class="col-5"><input type="text" name="tested_qty" class="form-control" value="" >
+
+</div></div>
+<div class="row"><div class="col-5" align="right"><label>Sampling Size</label></div>
+<div class="col-5"><input type="text" name="sampling_size" class="form-control" value="" >
+
+</div></div>
+<div class="row"><div class="col-5" align="right"><label>Lot Code</label></div>
+<div class="col-5"><input type="text" name="lot_code" class="form-control" value="" >
+
+</div></div>
+<div id="datecodediv"><!--wrapped the date code section in it's own div, this is where new date codes will be added-->>
+  <div class="row"><div class="col-5" align="right"><label>Date Code</label></div>
+    <div class="col-5"><input id="dcinput0" type="text" name="date_code" class="form-control" value="" placeholder="Add a DateCode" required>
+
+    </div>
+  </div>
+</div>
+<div class="row"><!--This is the add date code button and the populate button, the populate button adds the value of the datecode input to the inspection fields and adds more fields if necessary-->>
+  <div class="col-12">
+    <button id="deletecode" class="btn btn-secondary dcbutton no-print" type="button" value="input">Remove</button>
+    <button id="adddatecode" class="btn btn-secondary dcbutton no-print" type="button" value="input">Enter Date Code</button>
+    <div id="errorbox" class="no-print"></div>
+  </div>
+</div>
+
+<!--<div class="container1">
+<button class="add_form_field">Add New Field &nbsp; <span style="font-size:16px; font-weight:bold;">+ </span></button>
+<div><input type="text" name="mytext[]"></div>
+</div>-->
+
+    <div class="row"><div class="col-5" align="right"><label>Report Number</label></div>
+<div class="col-5"><input type="text" name="report_number" class="form-control" value="" >
+
+</div></div>
+<div class="row"><div class="col-5" align="right"><label>QC Inspector Name</label></div>
+<div class="col-5"><input type="text" name="qc_inspector_name" class="form-control" value="" >
+
+</div></div>
+  </div>
+</div>
+
+  
+</div>
+<div id="dialog" title="Inspection Checklist">
+<div class="card-body test">
+  <h3 id="icheadertitle" class="card-title">Inspection Checklist</h3>
+  <!-- <p class="card-text">...</p> -->
+  <div class="card">
+  <table class="table">
+    <thead class="thead-light">
+      <tr id="showhidetitlehead">
+          <th id="header-passed" scope="col" style="text-align:center; vertical-align: middle;">Passed</th>
+          <th scope="col" style="text-align:center; vertical-align: middle;">Failed</th>
+          <th scope="col" style="text-align:center; vertical-align: middle;">N/A</th>
+          <th scope="col" style="text-align:center; vertical-align: middle;">Inconclusive</th>
+          <th scope="col-7" style="text-align:left; vertical-align: middle;">Inspection Categories</th>
+        </tr>
+      </thead>
+
+<tr id="checkallshowhide">
+  <td scope="col" style="text-align:center; vertical-align:middle;"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"></td>
+  <td scope="col-7" style="text-align:left; vertical-align:middle;">Check All</td>
+</tr>
+<tr id="paish">
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="product_arrival_inspection_passed" name="product_arrival_inspection" value="Passed"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="product_arrival_inspection_failed" name="product_arrival_inspection" value="Failed"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="product_arrival_inspection_na" name="product_arrival_inspection" value="N/A"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="product_arrival_inspection_inconclusive" name="product_arrival_inspection" value="Inconclusive"></td>
+   <td scope="col-7" style="text-align:left; vertical-align:middle;">Product Arrival Inspection</td>
+</tr>
+<tr id="iaish">
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="internal_package_inspection_passed" name="internal_package_inspection" value="Passed"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="internal_package_inspection_failed" name="internal_package_inspection" value="Failed"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="internal_package_inspection_na" name="internal_package_inspection" value="N/A"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="internal_package_inspection_inconclusive" name="internal_package_inspection" value="Inconclusive"></td>
+   <td scope="col-7" style="text-align:left; vertical-align:middle;">Internal Package Inspection</td>
+</tr>
+<tr id="dbish">
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="detailed_bench_inspection_passed" name="detailed_bench_inspection" value="Passed"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="detailed_bench_inspection_failed" name="detailed_bench_inspection" value="Failed"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="detailed_bench_inspection_na" name="detailed_bench_inspection" value="N/A"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="detailed_bench_inspection_inconclusive" name="detailed_bench_inspection" value="Inconclusive"></td>
+   <td scope="col-7" style="text-align:left; vertical-align:middle;">Detailed Bench Inspection</td>
+</tr>
+<tr id="pcish">
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="product_carrier_inspection_passed" name="product_carrier_inspection" value="Passed"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="product_carrier_inspection_failed" name="product_carrier_inspection" value="Failed"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="product_carrier_inspection_na" name="product_carrier_inspection" value="N/A"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="product_carrier_inspection_inconclusive" name="product_carrier_inspection" value="Inconclusive"></td>
+   <td scope="col-7" style="text-align:left; vertical-align:middle;">Product Carrier Inspection</td>
+</tr>
+<tr id="pdish">
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="product_detailed_inspection_passed" name="product_detailed_inspection" value="Passed"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="product_detailed_inspection_failed" name="product_detailed_inspection" value="Failed"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="product_detailed_inspection_na" name="product_detailed_inspection" value="N/A"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="product_detailed_inspection_inconclusive" name="product_detailed_inspection" value="Inconclusive"></td>
+   <td scope="col-7" style="text-align:left; vertical-align:middle;">Product Detailed Inspection</td>
+</tr>
+<tr id= "dlish">
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="detailed_lead_inspection_passed" name="detailed_lead_inspection" value="Passed"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="detailed_lead_inspection_failed" name="detailed_lead_inspection" value="Failed"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="detailed_lead_inspection_na" name="detailed_lead_inspection" value="N/A"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="detailed_lead_inspection_inconclusive" name="detailed_lead_inspection" value="Inconclusive"></td>
+   <td scope="col-7" style="text-align:left; vertical-align:middle;">Detailed Lead Inspection</td>
+</tr>
+<tr id="cdsh">
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="component_dimensions_passed" name="component_dimensions" value="Passed"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="component_dimensions_failed" name="component_dimensions" value="Failed"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="component_dimensions_na" name="component_dimensions" value="N/A"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="component_dimensions_inconclusive" name="component_dimensions" value="Inconclusive"></td>
+   <td scope="col-7" style="text-align:left; vertical-align:middle;">Component Dimensions</td>
+</tr>
+<tr id="atish">
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="acetone_test_passed" name="acetone_test" value="Passed"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="acetone_test_failed" name="acetone_test" value="Failed"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="acetone_test_na" name="acetone_test" value="N/A"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="acetone_test_inconclusive" name="acetone_test" value="Inconclusive"></td>
+   <td scope="col-7" style="text-align:left; vertical-align:middle;">Acetone Test</td>
+</tr>
+<tr id="mpish">
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="marking_permanency_passed" name="marking_permanency" value="Passed"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="marking_permanency_failed" name="marking_permanency" value="Failed"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="marking_permanency_na" name="marking_permanency" value="N/A"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="marking_permanency_inconclusive" name="marking_permanency" value="Inconclusive"></td>
+   <td scope="col-7" style="text-align:left; vertical-align:middle;">Marking Permanency</td>
+</tr>
+<tr id="xirsh">
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="xrf_passed" name="xrf" value="Passed"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="xrf_failed" name="xrf" value="Failed"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="xrf_na" name="xrf" value="N/A"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="xrf_inconclusive" name="xrf" value="Inconclusive"></td>
+   <td scope="col-7" style="text-align:left; vertical-align:middle;">XRF</td>
+</tr>
+<tr id="xrirsh">
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="xray_passed" name="xray" value="Passed"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="xray_failed" name="xray" value="Failed"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="xray_na" name="xray" value="N/A"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="xray_inconclusive" name="xray" value="Inconclusive"></td>
+   <td scope="col-7" style="text-align:left; vertical-align:middle;">X-Ray</td>
+</tr>
+<tr id="strsh">
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="solder_test_passed" name="solder_test" value="Passed"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="solder_test_failed" name="solder_test" value="Failed"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="solder_test_na" name="solder_test" value="N/A"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="solder_test_inconclusive" name="solder_test" value="Inconclusive"></td>
+   <td scope="col-7" style="text-align:left; vertical-align:middle;">Solder Test</td>
+</tr>
+<tr id="dcsh">
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="decapsulation_passed" name="decapsulation" value="Passed"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="decapsulation_failed" name="decapsulation" value="Failed"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="decapsulation_na" name="decapsulation" value="N/A"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="decapsulation_inconclusive" name="decapsulation" value="Inconclusive"></td>
+   <td scope="col-7" style="text-align:left; vertical-align:middle;">De-capsulation</td>
+</tr>
+<tr id="stsh">
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="scrape_test_passed" name="scrape_test" value="Passed"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="scrape_test_failed" name="scrape_test" value="Failed"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="scrape_test_na" name="scrape_test" value="N/A"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="scrape_test_inconclusive" name="scrape_test" value="Inconclusive"></td>
+   <td scope="col-7" style="text-align:left; vertical-align:middle;">Scrape Test</td>
+</tr>
+<tr id="hssh">
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="heated_solvent_passed" name="heated_solvent" value="Passed"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="heated_solvent_failed" name="heated_solvent" value="Failed"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="heated_solvent_na" name="heated_solvent" value="N/A"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="heated_solvent_inconclusive" name="heated_solvent" value="Inconclusive"></td>
+   <td scope="col-7" style="text-align:left; vertical-align:middle;">Heated Solvent</td>
+</tr>
+<tr id="etdsh">
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="electrical_test_passed" name="electrical_test" value="Passed"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="electrical_test_failed" name="electrical_test" value="Failed"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="electrical_test_na" name="electrical_test" value="N/A"></td>
+  <td scope="col" style="text-align:center; vertical-align:middle;"><input type="radio" id="electrical_test_inconclusive" name="electrical_test" value="Inconclusive"></td>
+   <td scope="col-7" style="text-align:left; vertical-align:middle;">Electrical Test</td>
+</tr>
+  </table>
+</div>
+
+<div class="card border pt-3 mb-3">
+<ul>
+  <li><strong>Passed:</strong> Product Passed accordingly to the specific inspection and/or test performed</li>
+  <li><strong>Failed:</strong> Product Failed accordingly to the specific inspection and/or test performed</li>
+  <li><strong>N/A:</strong> Product inspection and/or test does not apply for the specified product</li>
+  <li><strong>CSI:</strong> Classic Semiconductor Investigation, up to 78 inspection check points</li>
+</ul>
+</div>
+
+<div class="card border p-3 text-xs-center">
+  <p>The product has been inspected in accordance to Classic’s AS9120-2016 documents A-860-001 and R-860-003</p>
+  <p>DISCLAIMER: Classic Components Inc. performs analysis work as a technical service to our customers
+and extends every effort to report reliable data and an accurate interpretation of this data. 
+</p>
+  <p>Classic Components will apply our best professional analysis and efforts for any work performed.</p>
+  <p>NO WARRANTY IS EXPRESSED OR IMPLIED REGARDING RESULTS OF OUR DATA ANALYSIS</p>
+  
+</div>
+
+<div class="row mt-3">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">
+          QCM Name
+        </th>
+        <th scope="col">
+          QCM Signature
+        </th>
+        <th scope="col">
+          Date
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr scope="row">
+        <td><!-- QCM Name --><input type="text" name="qcm_name" id="qcmname" class="form-control" maxlength="20">
+</td>
+        <td><!-- QCM Signature --><input type="text" name="qcm_signature" id="qcmsignature" class="form-control" maxlength="20">
+</td>
+        <td><!-- QCM Date --><input type="date" name="qcm_date" id="inspectiondate" class="form-control" maxlength="20">
+</td>
+      </tr>
+    </tbody>
+    </table>
+  </div>
+</div>
+</div>
+<div id="icaddcontainer"></div>  <!--new inspection checklist form windows will show up here-->>
+
+<div id="paibox"><!--a new product inspection field can be added to the end of this div-->>
+
+</div>
+
+<div id="iaibox">
+  
+</div>
+
+<div id="dbibox">
+
+</div>
+
+<div id="pcibox">
+
+</div>
+
+<div id="pdibox">
+
+</div>
+
+<div id="dlibox">
+
+</div>
+
+<div id="cdbox">
+
+</div>
+
+<div id="atibox">
+
+</div>
+
+<div id="mpibox">
+
+</div>
+
+<div id="xirbox">
+  
+</div>
+
+<div id="xrirbox">
+   
+</div>
+
+<div id="stbox">
+
+</div>
+
+<div id="hsbox">
+
+</div>
+
+<div id="etdbox">
+
+</div>
+
+<button class="btn btn-primary no-print" role="button" type=submit class="bodycopy" value="Submit">Submit</button>
+<button id="print" class="btn btn-secondary no-print" type="button" value="input">Print</button>
+<div id="errorbox2" class="no-print"></div>
+</form>
+
+<script>
+// Example starter JavaScript for disabling form submissions if there are invalid fields
+(function() {
+  'use strict';
+  window.addEventListener('load', function() {
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.getElementsByClassName('needs-validation');
+    // Loop over them and prevent submission
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();
+</script>
+
+</div>
+<div class="no-print" height="100">&nbsp;</div>
+</div>
+
+<footer class="footer no-print">
+  <div>
+
+<nav class="navbar navbar-expand-sm bg-light navbar-custom nopr">
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <a class="nav-link" href="#intro">INTRO</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#productarrival">Product Arrival</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#internalarrival">Internal Arrival</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#detailedbench">Detailed Bench</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#productcarrier">Product Carrier</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#productdetailed">Product Detailed</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#detailedlead">Detailed Lead</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#componentdims">Component Dims</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#acetone">Acetone</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#markingperm">Marking Perm</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#xrf">XRF</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#xray">XRAY</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#soldertest">Solder Test</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#decap">Decap</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#scrape">Scrape</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#heatedsolvent">Heated Solvent</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#electrical">Electrical</a>
+    </li>
+  </ul>
+</nav>
+
+    
+  </div>
+</footer>    <!-- /.container -->
+    <!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="detailed_files/external/jquery/jquery.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script src="detailed_files/add_datecode.js" type="text/javascript" charset="utf-8"></script>
+
+  </body>
+</html>
